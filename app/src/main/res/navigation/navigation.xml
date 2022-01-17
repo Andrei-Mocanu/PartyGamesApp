@@ -11,14 +11,14 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_mainPageFragment"
-            app:destination="@id/mainPageFragment" />
-        <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
             android:id="@+id/action_loginFragment_to_forgotPaswordFragment"
             app:destination="@id/forgotPaswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_pickNicknameFragment"
+            app:destination="@id/pickNicknameFragment" />
     </fragment>
     <fragment
         android:id="@+id/mainPageFragment"
@@ -28,6 +28,12 @@
         <action
             android:id="@+id/action_mainPageFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_createRoomFragment"
+            app:destination="@id/createRoomFragment" />
+        <action
+            android:id="@+id/action_mainPageFragment_to_viewRoomsFragment"
+            app:destination="@id/viewRoomsFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -35,11 +41,47 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" >
         <action
-            android:id="@+id/action_registerFragment_to_mainPageFragment"
-            app:destination="@id/mainPageFragment" />
+            android:id="@+id/action_registerFragment_to_pickNicknameFragment"
+            app:destination="@id/pickNicknameFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPaswordFragment"
         android:name="com.example.partygamesapp.ForgotPaswordFragment"
         android:label="ForgotPaswordFragment" />
+    <fragment
+        android:id="@+id/createRoomFragment"
+        android:name="com.example.partygamesapp.CreateRoomFragment"
+        android:label="fragment_create_room"
+        tools:layout="@layout/fragment_create_room" >
+        <action
+            android:id="@+id/action_createRoomFragment_to_guessPasswordGameFragment"
+            app:destination="@id/guessPasswordGameFragment" />
+        <action
+            android:id="@+id/action_createRoomFragment_to_bonusGameFragment"
+            app:destination="@id/bonusGameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewRoomsFragment"
+        android:name="com.example.partygamesapp.ViewRoomsFragment"
+        android:label="fragment_view_rooms"
+        tools:layout="@layout/fragment_view_rooms" />
+    <fragment
+        android:id="@+id/pickNicknameFragment"
+        android:name="com.example.partygamesapp.PickNicknameFragment"
+        android:label="fragment_pick_nickname"
+        tools:layout="@layout/fragment_pick_nickname" >
+        <action
+            android:id="@+id/action_pickNicknameFragment_to_mainPageFragment"
+            app:destination="@id/mainPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bonusGameFragment"
+        android:name="com.example.partygamesapp.BonusGameFragment"
+        android:label="fragment_bonus_game"
+        tools:layout="@layout/fragment_bonus_game" />
+    <fragment
+        android:id="@+id/guessPasswordGameFragment"
+        android:name="com.example.partygamesapp.GuessPasswordGameFragment"
+        android:label="fragment_guess_password_game"
+        tools:layout="@layout/fragment_guess_password_game" />
 </navigation>

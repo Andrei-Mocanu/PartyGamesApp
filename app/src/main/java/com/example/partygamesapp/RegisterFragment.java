@@ -50,15 +50,7 @@ public class RegisterFragment extends Fragment {
                             public void onSuccess(AuthResult authResult) {
 
                                 Navigation.findNavController(view)
-                                        .navigate(R.id.action_registerFragment_to_mainPageFragment);
-
-                                HashMap<Object, String> hashMap = new HashMap<>();
-                                hashMap.put("name", binding.nameET.getText().toString());
-
-                                FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
-                                DatabaseReference myRef = database.getReference("Users");
-                                myRef.child(mAuth.getCurrentUser().getUid()).setValue(hashMap);
-
+                                        .navigate(R.id.action_registerFragment_to_pickNicknameFragment);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override

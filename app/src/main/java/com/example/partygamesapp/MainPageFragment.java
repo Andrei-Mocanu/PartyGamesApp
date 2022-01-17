@@ -16,6 +16,7 @@ import com.example.partygamesapp.databinding.FragmentMainPageBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -38,7 +39,22 @@ public class MainPageFragment extends Fragment {
         );
 
         mAuth = FirebaseAuth.getInstance();
-        afisareDatePersonale();
+        showProfileData();
+
+
+        binding.createRoomBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_createRoomFragment);
+            }
+        });
+
+        binding.viewRoomsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_viewRoomsFragment);
+            }
+        });
 
         binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,8 +62,6 @@ public class MainPageFragment extends Fragment {
                 mAuth.signOut();
                 if (mAuth.getCurrentUser() == null) {
                     Navigation.findNavController(view).navigate(R.id.action_mainPageFragment_to_loginFragment);
-                } else {
-
                 }
             }
         });
@@ -55,30 +69,19 @@ public class MainPageFragment extends Fragment {
         return binding.getRoot();
     }
 
-    private void afisareDatePersonale() {
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://itir-9c98e-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference myRef = database.getReference("Utilizatori");
-        myRef.child(mAuth.getCurrentUser().getUid()).get()
-                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-                    @Override
-                    public void onSuccess(DataSnapshot dataSnapshot) {
-                        String text = "";
-                        Iterator it = dataSnapshot.getChildren().iterator();
-                        while (it.hasNext()) {
-                            DataSnapshot snapshot = (DataSnapshot)it.next();
-                            String key = snapshot.getKey().toString();
-                            String value = snapshot.getValue().toString();
-                            if (!key.equals("uid")) {
-                                text += key + ": " + value + "\n";
-                            }
-                        }
-                        binding.infoTv.setText(text);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+    private void showProfileData() {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference myRef = database.getReference("Nicknames");
+        myRef.child(mAuth.getCurrentUser().getUid().toString()).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                String profileInfoText = "Nickname: ";
+                profileInfoText += dataSnapshot.getValue().toString();
+                binding.infoTv.setText(profileInfoText);
             }
         });
+
+
     }
 }

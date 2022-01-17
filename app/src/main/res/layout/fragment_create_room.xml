@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".CreateRoomFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="5"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Create Room"
+            android:textSize="50sp"/>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="Choose room Type"
+            android:textSize="35sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"/>
+
+            <ImageButton
+                android:id="@+id/privateRoomBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/private_room_img"
+                android:scaleType="fitCenter"
+                android:background="@drawable/roundcorner"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"/>
+
+            <ImageButton
+                android:id="@+id/publicRoomBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/public_room_img"
+                android:scaleType="fitCenter"
+                android:background="@drawable/roundcorner"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+            
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"/>
+
+            <ImageButton
+                android:id="@+id/guessPasswordGameBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/guess_password"
+                android:scaleType="fitCenter"
+                android:background="@drawable/roundcorner"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"/>
+
+            <ImageButton
+                android:id="@+id/bonusGameBtn"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/bonus"
+                android:scaleType="fitCenter"
+                android:background="@drawable/roundcorner"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center_horizontal"
+                />
+
+
+
+        </LinearLayout>
+
+
+
+        
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createRoomBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.7"
+            android:backgroundTint="#b50829"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:text="Create"
+            android:textSize="18sp"
+            app:cornerRadius="100dp" />
+
+    </LinearLayout>
+
+
+</layout>
+
+
+
+
+
+
+

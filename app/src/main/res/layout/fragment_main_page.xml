@@ -19,6 +19,28 @@
             tools:text="Salutare"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/createRoomBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="Create Room"
+            app:cornerRadius="100dp"
+            android:textSize="18sp"
+            android:backgroundTint="#b50829"
+            android:layout_gravity="center_horizontal"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewRoomsBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="View Rooms"
+            app:cornerRadius="100dp"
+            android:textSize="18sp"
+            android:backgroundTint="#b50829"
+            android:layout_gravity="center_horizontal"/>
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -28,6 +50,7 @@
             android:textSize="18sp"
             android:backgroundTint="#b50829"
             android:layout_gravity="center_horizontal"/>
+
 
     </LinearLayout>
 

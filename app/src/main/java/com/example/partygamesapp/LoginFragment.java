@@ -55,7 +55,7 @@ public class LoginFragment extends Fragment {
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-                                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainPageFragment);
+                                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_pickNicknameFragment);
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
@@ -68,6 +68,18 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        binding.signInGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signInAnonymously().addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_pickNicknameFragment);
+                    }
+                });
+
+            }
+        });
         binding.signUpTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

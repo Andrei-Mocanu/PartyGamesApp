@@ -95,6 +95,17 @@
             android:backgroundTint="#b50829"
             android:layout_gravity="center_horizontal"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/signInGuest"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="Sign In as Guest"
+            app:cornerRadius="100dp"
+            android:textSize="18sp"
+            android:backgroundTint="#b50829"
+            android:layout_gravity="center_horizontal"/>
+
 
 
         <LinearLayout
