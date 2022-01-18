@@ -81,7 +81,5 @@ public class MainPageFragment extends Fragment {
                 binding.infoTv.setText(profileInfoText);
             }
         });
-
-
     }
 }

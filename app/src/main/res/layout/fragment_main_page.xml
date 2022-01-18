@@ -51,7 +51,6 @@
             android:backgroundTint="#b50829"
             android:layout_gravity="center_horizontal"/>
 
-
     </LinearLayout>
 
 </layout>

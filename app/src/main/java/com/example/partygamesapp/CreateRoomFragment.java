@@ -53,6 +53,12 @@ public class CreateRoomFragment extends Fragment {
                 UUID uuid = UUID.randomUUID();
                 HashMap<Object, String> hashMap = new HashMap<>();
 
+                if (binding.roomnameET.getText().toString().equals("")) {
+                    hashMap.put("roomName", "-");
+                } else {
+                    hashMap.put("roomName", binding.roomnameET.getText().toString());
+                }
+
                 if(isRoomPublic)
                 {
                     hashMap.put("roomType","public");
@@ -73,6 +79,8 @@ public class CreateRoomFragment extends Fragment {
                 }
 
                 hashMap.put(mAuth.getCurrentUser().getUid().toString(),"admin");
+
+                hashMap.put("gameState", "Lobby");
 
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");

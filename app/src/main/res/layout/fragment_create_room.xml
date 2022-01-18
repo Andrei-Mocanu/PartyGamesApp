@@ -19,11 +19,23 @@
             android:text="Create Room"
             android:textSize="50sp"/>
 
-
-        <View
+        <com.google.android.material.textfield.TextInputLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/etRoomNameLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.3"/>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/roomnameET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Room Name"
+                android:inputType="text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <TextView
