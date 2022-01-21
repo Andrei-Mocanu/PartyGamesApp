@@ -65,11 +65,11 @@ public class RecycleViewAdapterViewRooms extends RecyclerView.Adapter<RecycleVie
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null)  {
+            if (mClickListener != null) {
                 mClickListener.onItemClick(view, getAdapterPosition());
             }
             Bundle bundle = new Bundle();
-            bundle.putString("Uid", roomsList.get(getAdapterPosition()).getUid());
+            bundle.putString("UUidCamera", roomsList.get(getAdapterPosition()).getUid());
             if(roomsList.get(getAdapterPosition()).getGameType().equals("guessThePassword"))
                 Navigation.findNavController(view).navigate(R.id.action_viewRoomsFragment_to_guessPasswordGameFragment,bundle);
             else
