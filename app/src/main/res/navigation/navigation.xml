@@ -64,7 +64,14 @@
         android:id="@+id/viewRoomsFragment"
         android:name="com.example.partygamesapp.ViewRoomsFragment"
         android:label="fragment_view_rooms"
-        tools:layout="@layout/fragment_view_rooms" />
+        tools:layout="@layout/fragment_view_rooms" >
+        <action
+            android:id="@+id/action_viewRoomsFragment_to_guessPasswordGameFragment"
+            app:destination="@id/guessPasswordGameFragment" />
+        <action
+            android:id="@+id/action_viewRoomsFragment_to_bonusGameFragment"
+            app:destination="@id/bonusGameFragment" />
+    </fragment>
     <fragment
         android:id="@+id/pickNicknameFragment"
         android:name="com.example.partygamesapp.PickNicknameFragment"
