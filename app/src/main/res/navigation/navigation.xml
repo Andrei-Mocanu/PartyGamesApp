@@ -59,6 +59,9 @@
         <action
             android:id="@+id/action_createRoomFragment_to_bonusGameFragment"
             app:destination="@id/bonusGameFragment" />
+        <action
+            android:id="@+id/action_createRoomFragment_to_mainPageFragment"
+            app:destination="@id/mainPageFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewRoomsFragment"
@@ -66,11 +69,17 @@
         android:label="fragment_view_rooms"
         tools:layout="@layout/fragment_view_rooms" >
         <action
+            android:id="@+id/action_viewRoomsFragment_to_joinPrivateRoomFragment"
+            app:destination="@id/joinPrivateRoomFragment" />
+        <action
             android:id="@+id/action_viewRoomsFragment_to_guessPasswordGameFragment"
             app:destination="@id/guessPasswordGameFragment" />
         <action
             android:id="@+id/action_viewRoomsFragment_to_bonusGameFragment"
             app:destination="@id/bonusGameFragment" />
+        <action
+            android:id="@+id/action_viewRoomsFragment_to_roomLobbyFragment"
+            app:destination="@id/roomLobbyFragment" />
     </fragment>
     <fragment
         android:id="@+id/pickNicknameFragment"
@@ -91,4 +100,18 @@
         android:name="com.example.partygamesapp.GuessPasswordGameFragment"
         android:label="fragment_guess_password_game"
         tools:layout="@layout/fragment_guess_password_game" />
+    <fragment
+        android:id="@+id/joinPrivateRoomFragment"
+        android:name="com.example.partygamesapp.JoinPrivateRoomFragment"
+        android:label="fragment_private_room_password"
+        tools:layout="@layout/fragment_private_room_password" >
+        <action
+            android:id="@+id/action_joinPrivateRoomFragment_to_roomLobbyFragment"
+            app:destination="@id/roomLobbyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/roomLobbyFragment"
+        android:name="com.example.partygamesapp.RoomLobbyFragment"
+        android:label="fragment_room_lobby"
+        tools:layout="@layout/fragment_room_lobby" />
 </navigation>

@@ -91,6 +91,23 @@
 
         </LinearLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/privateRoomPasswordLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/privateRoomPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Room Password"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"

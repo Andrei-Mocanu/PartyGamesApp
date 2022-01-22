@@ -25,7 +25,8 @@ public class CreateRoomFragment extends Fragment {
 
     FragmentCreateRoomBinding binding;
     FirebaseAuth mAuth;
-    boolean isRoomPublic = false,isFirstGame = false;
+    boolean isRoomPublic = false, isFirstGame = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,59 +41,52 @@ public class CreateRoomFragment extends Fragment {
 
         binding.privateRoomBtn.setOnClickListener(v -> changeHighlightButtonRoomType(binding.privateRoomBtn, binding));
         binding.publicRoomBtn.setOnClickListener(v -> changeHighlightButtonRoomType(binding.publicRoomBtn, binding));
-
         binding.guessPasswordGameBtn.setOnClickListener(v -> changeHighlightButtonGameType(binding.guessPasswordGameBtn, binding));
         binding.bonusGameBtn.setOnClickListener(v -> changeHighlightButtonGameType(binding.bonusGameBtn, binding));
 
         changeHighlightButtonRoomType(binding.privateRoomBtn, binding);
         changeHighlightButtonGameType(binding.guessPasswordGameBtn, binding);
 
-        binding.createRoomBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UUID uuid = UUID.randomUUID();
-                HashMap<Object, String> hashMap = new HashMap<>();
+        binding.createRoomBtn.setOnClickListener(view -> {
+            UUID uuid = UUID.randomUUID();
+            HashMap<Object, String> hashMap = new HashMap<>();
 
-                if (binding.roomnameET.getText().toString().equals("")) {
-                    hashMap.put("roomName", "-");
-                } else {
-                    hashMap.put("roomName", binding.roomnameET.getText().toString());
-                }
-
-                if(isRoomPublic)
-                {
-                    hashMap.put("roomType","public");
-                }
-
-                else
-                {
-                    hashMap.put("roomType","private");
-                }
-
-                if(isFirstGame)
-                {
-                    hashMap.put("gameType","guessThePassword");
-                }
-                else
-                {
-                    hashMap.put("gameType","bonusGame");
-                }
-
-                hashMap.put(mAuth.getCurrentUser().getUid().toString(),"admin");
-
-                hashMap.put("gameState", "Lobby");
-
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
-                DatabaseReference myRef = database.getReference("Camere");
-                myRef.child(uuid.toString()).setValue(hashMap);
-
-                if(isFirstGame)
-                    Navigation.findNavController(view).navigate(R.id.action_createRoomFragment_to_guessPasswordGameFragment);
-                else
-                    Navigation.findNavController(view).navigate(R.id.action_createRoomFragment_to_bonusGameFragment);
-
+            if (binding.roomnameET.getText().toString().equals("")) {
+                hashMap.put("roomName", "-");
+            } else {
+                hashMap.put("roomName", binding.roomnameET.getText().toString());
             }
+
+            if (isRoomPublic) {
+                hashMap.put("roomPassword", "-");
+                hashMap.put("roomType", "public");
+            } else {
+                hashMap.put("roomPassword", binding.privateRoomPassword.getText().toString());
+                hashMap.put("roomType", "private");
+            }
+
+            if (isFirstGame) {
+                hashMap.put("gameType", "guessThePassword");
+            } else {
+                hashMap.put("gameType", "bonusGame");
+            }
+
+            hashMap.put(mAuth.getCurrentUser().getUid().toString(), "admin");
+
+            hashMap.put("gameState", "Lobby");
+
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
+            DatabaseReference myRef = database.getReference("Camere");
+            myRef.child(uuid.toString()).setValue(hashMap);
+
+            Navigation.findNavController(view).navigate(R.id.action_createRoomFragment_to_mainPageFragment);
+
+//            if (isFirstGame)
+//                Navigation.findNavController(view).navigate(R.id.action_createRoomFragment_to_guessPasswordGameFragment);
+//            else
+//                Navigation.findNavController(view).navigate(R.id.action_createRoomFragment_to_bonusGameFragment);
+
         });
 
         return binding.getRoot();
@@ -101,11 +95,13 @@ public class CreateRoomFragment extends Fragment {
     public void changeHighlightButtonRoomType(ImageButton btn, FragmentCreateRoomBinding binding) {
         if (btn.equals(binding.privateRoomBtn)) {
 
+            binding.privateRoomPasswordLayout.setVisibility(View.VISIBLE);
             btn.setBackgroundColor(Color.parseColor("#65E0E5"));
             binding.publicRoomBtn.setBackgroundColor(0);
             isRoomPublic = false;
         } else if (btn.equals(binding.publicRoomBtn)) {
 
+            binding.privateRoomPasswordLayout.setVisibility(View.INVISIBLE);
             btn.setBackgroundColor(Color.parseColor("#65E0E5"));
             binding.privateRoomBtn.setBackgroundColor(0);
             isRoomPublic = true;
@@ -114,12 +110,10 @@ public class CreateRoomFragment extends Fragment {
 
     public void changeHighlightButtonGameType(ImageButton btn, FragmentCreateRoomBinding binding) {
         if (btn.equals(binding.guessPasswordGameBtn)) {
-
             btn.setBackgroundColor(Color.parseColor("#65E0E5"));
             binding.bonusGameBtn.setBackgroundColor(0);
             isFirstGame = true;
         } else if (btn.equals(binding.bonusGameBtn)) {
-
             btn.setBackgroundColor(Color.parseColor("#65E0E5"));
             binding.guessPasswordGameBtn.setBackgroundColor(0);
             isFirstGame = false;

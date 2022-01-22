@@ -41,7 +41,6 @@ public class ViewRoomsFragment extends Fragment {
                 false
         );
 
-
         recyclerView = binding.rvRooms;
         adapter = new RecycleViewAdapterViewRooms(getActivity(),new ArrayList<Room>());
         recyclerView.setAdapter(adapter);
@@ -73,7 +72,7 @@ public class ViewRoomsFragment extends Fragment {
         });
     }
 
-    private void showRoomInfoClassic(String roomId) {
+    public void showRoomInfoClassic(String roomId) {
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference myRef = database.getReference("Camere");
         myRef.child(roomId).get()

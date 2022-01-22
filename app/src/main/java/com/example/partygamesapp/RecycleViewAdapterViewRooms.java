@@ -16,11 +16,12 @@ import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
 
-public class RecycleViewAdapterViewRooms extends RecyclerView.Adapter<RecycleViewAdapterViewRooms.ViewHolder>{
+public class RecycleViewAdapterViewRooms extends RecyclerView.Adapter<RecycleViewAdapterViewRooms.ViewHolder> {
     private final LayoutInflater mInflater;
     public static ArrayList<Room> roomsList;
     public static ItemClickListener mClickListener;
-    public RecycleViewAdapterViewRooms(Context context,ArrayList<Room> roomsList) {
+
+    public RecycleViewAdapterViewRooms(Context context, ArrayList<Room> roomsList) {
         this.mInflater = LayoutInflater.from(context);
         this.roomsList = roomsList;
     }
@@ -51,10 +52,10 @@ public class RecycleViewAdapterViewRooms extends RecyclerView.Adapter<RecycleVie
     }
 
 
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
         MaterialButton joinRoomBtn;
+
         public ViewHolder(View itemView) {
             super(itemView);
             myTextView = itemView.findViewById(R.id.InfoRoomTV);
@@ -70,10 +71,11 @@ public class RecycleViewAdapterViewRooms extends RecyclerView.Adapter<RecycleVie
             }
             Bundle bundle = new Bundle();
             bundle.putString("UUidCamera", roomsList.get(getAdapterPosition()).getUid());
-            if(roomsList.get(getAdapterPosition()).getGameType().equals("guessThePassword"))
-                Navigation.findNavController(view).navigate(R.id.action_viewRoomsFragment_to_guessPasswordGameFragment,bundle);
-            else
-                Navigation.findNavController(view).navigate(R.id.action_viewRoomsFragment_to_bonusGameFragment,bundle);
+            if (roomsList.get(getAdapterPosition()).getRoomType().equals("private")) {
+                Navigation.findNavController(view).navigate(R.id.action_viewRoomsFragment_to_joinPrivateRoomFragment, bundle);
+            } else {
+                Navigation.findNavController(view).navigate(R.id.action_viewRoomsFragment_to_roomLobbyFragment, bundle);
+            }
         }
     }
 
