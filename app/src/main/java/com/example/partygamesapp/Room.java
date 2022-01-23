@@ -2,13 +2,14 @@ package com.example.partygamesapp;
 
 public class Room {
 
-    private String roomName,roomType,adminName,currNumberUsers,maxNumberUsers, gameType,currState,uid;
+    private String roomName,roomType,adminName, adminUID,currNumberUsers,maxNumberUsers, gameType,currState,uid;
 
     public  Room() {
         this.uid = "";
         this.roomName = "";
         this.roomType = "";
         this.adminName = "";
+        this.adminUID = "";
         this.currNumberUsers = "";
         this.maxNumberUsers = "";
         this.gameType = "";
@@ -16,11 +17,12 @@ public class Room {
 
     }
 
-    public  Room(String uid,String roomName,String roomType,String adminName,String currNumberUsers,String maxNumberUsers,String gameType,String currState) {
+    public  Room(String uid,String roomName,String roomType,String adminName,String adminUID,String currNumberUsers,String maxNumberUsers,String gameType,String currState) {
         this.uid = uid;
         this.roomName = roomName;
         this.roomType = roomType;
         this.adminName = adminName;
+        this.adminUID = adminUID;
         this.currNumberUsers = currNumberUsers;
         this.maxNumberUsers = maxNumberUsers;
         this.gameType = gameType;
@@ -42,6 +44,13 @@ public class Room {
         return this.uid;
     }
 
+    public String getAdminUID() {
+        return adminUID;
+    }
+
+    public void setAdminUID(String adminUID) {
+        this.adminUID = adminUID;
+    }
 
     public String getRoomName() {
         return roomName;

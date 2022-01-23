@@ -38,6 +38,8 @@ public class JoinPrivateRoomFragment extends Fragment {
             DatabaseReference myRef = database.getReference("Camere");
             Bundle bundle = new Bundle();
             bundle.putString("UUidCamera", roomId);
+            bundle.putString("gameType", getArguments().getString("gameType"));
+            bundle.putString("userType", getArguments().getString("userType"));
             myRef.child(roomId).get()
                     .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                         @Override

@@ -13,6 +13,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -71,6 +74,24 @@ public class RecycleViewAdapterViewRooms extends RecyclerView.Adapter<RecycleVie
             }
             Bundle bundle = new Bundle();
             bundle.putString("UUidCamera", roomsList.get(getAdapterPosition()).getUid());
+            bundle.putString("gameType", roomsList.get(getAdapterPosition()).getGameType());
+
+            if (Integer.parseInt(roomsList.get(getAdapterPosition()).getCurrNumberUsers()) < 2 && !roomsList.get(getAdapterPosition()).getAdminUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
+                DatabaseReference myRef = database.getReference("Camere");
+                myRef.child(roomsList.get(getAdapterPosition()).getUid()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue("player");
+                bundle.putString("userType", "player");
+            } else if (Integer.parseInt(roomsList.get(getAdapterPosition()).getCurrNumberUsers()) >= 2 && !roomsList.get(getAdapterPosition()).getAdminUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
+                DatabaseReference myRef = database.getReference("Camere");
+                myRef.child(roomsList.get(getAdapterPosition()).getUid()).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue("spectator");
+                bundle.putString("userType", "spectator");
+            }
+
+            if (roomsList.get(getAdapterPosition()).getAdminUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                bundle.putString("userType", "admin");
+            }
+
             if (roomsList.get(getAdapterPosition()).getRoomType().equals("private")) {
                 Navigation.findNavController(view).navigate(R.id.action_viewRoomsFragment_to_joinPrivateRoomFragment, bundle);
             } else {

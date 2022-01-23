@@ -54,12 +54,6 @@
         android:label="fragment_create_room"
         tools:layout="@layout/fragment_create_room" >
         <action
-            android:id="@+id/action_createRoomFragment_to_guessPasswordGameFragment"
-            app:destination="@id/guessPasswordGameFragment" />
-        <action
-            android:id="@+id/action_createRoomFragment_to_bonusGameFragment"
-            app:destination="@id/bonusGameFragment" />
-        <action
             android:id="@+id/action_createRoomFragment_to_mainPageFragment"
             app:destination="@id/mainPageFragment" />
     </fragment>
@@ -71,12 +65,6 @@
         <action
             android:id="@+id/action_viewRoomsFragment_to_joinPrivateRoomFragment"
             app:destination="@id/joinPrivateRoomFragment" />
-        <action
-            android:id="@+id/action_viewRoomsFragment_to_guessPasswordGameFragment"
-            app:destination="@id/guessPasswordGameFragment" />
-        <action
-            android:id="@+id/action_viewRoomsFragment_to_bonusGameFragment"
-            app:destination="@id/bonusGameFragment" />
         <action
             android:id="@+id/action_viewRoomsFragment_to_roomLobbyFragment"
             app:destination="@id/roomLobbyFragment" />
@@ -113,5 +101,12 @@
         android:id="@+id/roomLobbyFragment"
         android:name="com.example.partygamesapp.RoomLobbyFragment"
         android:label="fragment_room_lobby"
-        tools:layout="@layout/fragment_room_lobby" />
+        tools:layout="@layout/fragment_room_lobby" >
+        <action
+            android:id="@+id/action_roomLobbyFragment_to_guessPasswordGameFragment"
+            app:destination="@id/guessPasswordGameFragment" />
+        <action
+            android:id="@+id/action_roomLobbyFragment_to_bonusGameFragment"
+            app:destination="@id/bonusGameFragment" />
+    </fragment>
 </navigation>

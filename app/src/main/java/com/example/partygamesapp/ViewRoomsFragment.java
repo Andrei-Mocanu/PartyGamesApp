@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,10 +82,20 @@ public class ViewRoomsFragment extends Fragment {
                     public void onSuccess(DataSnapshot dataSnapshot) {
                         String roomName = dataSnapshot.child("roomName").getValue().toString();
                         String roomType = dataSnapshot.child("roomType").getValue().toString();
-                        String currentNumberOfUsers = String.valueOf(dataSnapshot.getChildrenCount() - 4);
-                        String maximumNumberOfUsers = "5";
+                        String maximumNumberOfUsers = "2";
                         String choosenGame = dataSnapshot.child("gameType").getValue().toString();
                         String currentGameState = dataSnapshot.child("gameState").getValue().toString();
+                        int currentNumberOfUsersInt = 0;
+                        Iterator iterator = dataSnapshot.getChildren().iterator();
+                        while (iterator.hasNext()) {
+                            DataSnapshot dataSnapshot1 = (DataSnapshot) iterator.next();
+                            if (dataSnapshot1.getValue().toString().equals("admin")
+                                    || dataSnapshot1.getValue().toString().equals("player")
+                                    || dataSnapshot1.getValue().toString().equals("spectator")) {
+                                currentNumberOfUsersInt++;
+                            }
+                        }
+                        String currentNumberOfUsers = String.valueOf(currentNumberOfUsersInt);
                         Iterator it = dataSnapshot.getChildren().iterator();
                         while (it.hasNext()) {
                             DataSnapshot snapshot = (DataSnapshot) it.next();
@@ -107,7 +118,7 @@ public class ViewRoomsFragment extends Fragment {
                                                                 + "Choosen Game: " + choosenGame + "\n"
                                                                 + "Current Game State: " + currentGameState
                                                 );*/
-                                                adapter.addNewRoom(new Room(roomId,roomName,roomType,adminName,currentNumberOfUsers,
+                                                adapter.addNewRoom(new Room(roomId,roomName,roomType,adminName,adminUID,currentNumberOfUsers,
                                                         maximumNumberOfUsers,choosenGame,currentGameState));
 
                                                 adapter.notifyDataSetChanged();
@@ -128,9 +139,5 @@ public class ViewRoomsFragment extends Fragment {
                 Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void showRoomInfoExtended() {
-
     }
 }
