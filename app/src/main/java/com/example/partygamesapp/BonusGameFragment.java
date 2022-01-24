@@ -206,10 +206,10 @@ public class BonusGameFragment extends Fragment {
                                                         Integer.parseInt(snapshot.child("scorAdmin").getValue().toString())) {
                                                     result.setText("A castigat " + playerName);
                                                 }
-                                                else if(Integer.parseInt(snapshot.child("scorPlayer").getValue().toString()) ==
-                                                        Integer.parseInt(snapshot.child("scorAdmin").getValue().toString())) {
-                                                    if(Integer.parseInt(snapshot.child("timestampPlayer").getValue().toString()) <
-                                                            Integer.parseInt(snapshot.child("timestampAdmin").getValue().toString())) {
+                                                else if(Long.parseLong(snapshot.child("scorPlayer").getValue().toString()) ==
+                                                        Long.parseLong(snapshot.child("scorAdmin").getValue().toString())) {
+                                                    if(Long.parseLong(snapshot.child("timestampPlayer").getValue().toString()) <
+                                                            Long.parseLong(snapshot.child("timestampAdmin").getValue().toString())) {
                                                         result.setText("A castigat " + playerName);
                                                     }
                                                     else {
