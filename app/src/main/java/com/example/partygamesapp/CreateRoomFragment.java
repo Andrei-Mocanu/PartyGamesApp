@@ -82,6 +82,17 @@ public class CreateRoomFragment extends Fragment {
             DatabaseReference myRef = database.getReference("Camere");
             myRef.child(uuid.toString()).setValue(hashMap);
 
+
+            HashMap<String,String> dateJocuri = new HashMap<String,String>();
+            dateJocuri.put("scorAdmin","-");
+            dateJocuri.put("scorPlayer","-");
+            dateJocuri.put("timestampAdmin","-");
+            dateJocuri.put("timestampPlayer","-");
+
+            DatabaseReference myRefJocuri = database.getReference("Jocuri");
+            myRefJocuri.child(uuid.toString()).setValue(dateJocuri);
+
+
             Navigation.findNavController(view).navigate(R.id.action_createRoomFragment_to_mainPageFragment);
 
 //            if (isFirstGame)

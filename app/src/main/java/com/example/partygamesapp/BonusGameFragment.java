@@ -2,6 +2,7 @@ package com.example.partygamesapp;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
@@ -15,10 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.partygamesapp.databinding.FragmentBonusGameBinding;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
 
@@ -27,6 +35,9 @@ public class BonusGameFragment extends Fragment {
     TextView num1, num2, answer, result;
     String uid;
     FragmentBonusGameBinding binding;
+    int rounds = 0;
+    int score = 0;
+    String userType;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,12 +52,13 @@ public class BonusGameFragment extends Fragment {
         num2 = binding.secondNumber;
         answer = binding.answer;
         result = binding.trueOrFalse;
-
+        userType = getArguments().getString("userType");
         init();
 
         uid = getArguments().getString("UUidCamera");
+
         Log.d("UUidCamera", uid);
-        Toast.makeText(getActivity(), uid.toString(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), uid.toString(), Toast.LENGTH_SHORT).show();
 
         binding.button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,15 +129,130 @@ public class BonusGameFragment extends Fragment {
         binding.ans.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.valueOf(String.valueOf(num1.getText())) + Integer.valueOf(String.valueOf(num2.getText())) ==Integer.valueOf(String.valueOf(answer.getText()))) {
-                    result.setText("AI CASTIGAT !!!");
-                    //Salvare user castigator in bd
-                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
-                    DatabaseReference myRef = database.getReference("Camere");
-                    myRef.child(uid).child("Winner").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                } else {
-                    result.setText("INCORECT");
+                rounds++;
+                if (rounds < 3) {
+
+                    if (Integer.valueOf(String.valueOf(num1.getText())) + Integer.valueOf(String.valueOf(num2.getText())) ==Integer.valueOf(String.valueOf(answer.getText()))) {
+                        score++;
+                    }
+                    init();
                 }
+                else {
+                    if (Integer.valueOf(String.valueOf(num1.getText())) + Integer.valueOf(String.valueOf(num2.getText())) ==Integer.valueOf(String.valueOf(answer.getText()))) {
+                        //result.setText("AI CASTIGAT !!!");
+                        score++;
+                        result.setText("Gata jocu !!! Scorul e " + score);
+                        //Salvare user castigator in bd
+
+                    } else {
+                        result.setText("Gata jocu !!! Scorul e " + score);
+                        //result.setText("INCORECT");
+                    }
+                    FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
+                    DatabaseReference myRef = database.getReference("Jocuri");
+                    if(userType.equals("admin")) {
+                        myRef.child(uid).child("scorAdmin").setValue(String.valueOf(score));
+                        myRef.child(uid).child("timestampAdmin").setValue(String.valueOf(System.currentTimeMillis()));
+                    }
+                    else if(userType.equals("player")) {
+                        myRef.child(uid).child("scorPlayer").setValue(String.valueOf(score));
+                        myRef.child(uid).child("timestampPlayer").setValue(String.valueOf(System.currentTimeMillis()));
+                    }
+                    else if(userType.equals("spectator")){
+                        myRef.child(uid).child("scorSpectator").setValue(String.valueOf(score));
+                    }
+
+                    myRef.child(uid).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(!snapshot.child("scorAdmin").getValue().toString().equals("-")
+                            && !snapshot.child("scorPlayer").getValue().toString().equals("-")
+                            && !snapshot.child("timestampAdmin").getValue().toString().equals("-")
+                            && !snapshot.child("timestampPlayer").getValue().toString().equals("-")) {
+                                FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");
+                                DatabaseReference myRef = database.getReference("Camere");
+                                myRef.child(uid).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DataSnapshot dataSnapshot) {
+                                        String adminUid = "",playerUid = "";
+                                        Iterator it = dataSnapshot.getChildren().iterator();
+                                        while(it.hasNext())
+                                        {
+                                            DataSnapshot snapshot1 = (DataSnapshot) it.next();
+                                            if(snapshot1.getValue().toString().equals("admin")) {
+                                                adminUid = snapshot1.getKey().toString();
+                                            }
+                                            else if(snapshot1.getValue().toString().equals("player")) {
+                                                playerUid = snapshot1.getKey().toString();
+                                            }
+                                        }
+                                        Log.d("admin Uid inainte ",adminUid);
+                                        DatabaseReference myRefNickname = database.getReference("Nicknames");
+                                        String finalAdminUid = adminUid;
+                                        String finalPlayerUid = playerUid;
+                                        myRefNickname.get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                                            @Override
+                                            public void onSuccess(DataSnapshot dataSnapshot) {
+                                                Log.d("admin Uid ",finalAdminUid);
+                                                Log.d("player Uid ",finalPlayerUid);
+
+                                                String adminName = dataSnapshot.child(finalAdminUid).getValue().toString();
+                                                String playerName = dataSnapshot.child(finalPlayerUid).getValue().toString();
+                                                Log.d("admin name ",adminName);
+                                                Log.d("player name ",playerName);
+                                                if(Integer.parseInt(snapshot.child("scorAdmin").getValue().toString()) >
+                                                        Integer.parseInt(snapshot.child("scorPlayer").getValue().toString())) {
+                                                    result.setText("A castigat " + adminName);
+                                                }
+
+                                                else if(Integer.parseInt(snapshot.child("scorPlayer").getValue().toString()) >
+                                                        Integer.parseInt(snapshot.child("scorAdmin").getValue().toString())) {
+                                                    result.setText("A castigat " + playerName);
+                                                }
+                                                else if(Integer.parseInt(snapshot.child("scorPlayer").getValue().toString()) ==
+                                                        Integer.parseInt(snapshot.child("scorAdmin").getValue().toString())) {
+                                                    if(Integer.parseInt(snapshot.child("timestampPlayer").getValue().toString()) <
+                                                            Integer.parseInt(snapshot.child("timestampAdmin").getValue().toString())) {
+                                                        result.setText("A castigat " + playerName);
+                                                    }
+                                                    else {
+                                                        result.setText("A castigat " + adminName);
+                                                    }
+
+                                                }
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
+
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+
 
             }
         });
