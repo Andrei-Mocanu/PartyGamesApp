@@ -219,7 +219,7 @@ public class BonusGameFragment extends Fragment {
                                                 }
 
                                                 if(userType.equals("spectator")) {
-                                                    result.append("/n Scorul tau: " + String.valueOf(score));
+                                                    result.append("\n Scorul tau: " + String.valueOf(score));
                                                 }
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {

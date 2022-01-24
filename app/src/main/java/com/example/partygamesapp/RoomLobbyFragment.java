@@ -123,10 +123,10 @@ public class RoomLobbyFragment extends Fragment {
 
                                 } else {
                                     if (gameState.equals("Started")) {
-                                        if (gameType.equals("guessThePassword") && String.valueOf(getVisibleFragment().getId()).equals("2131231088") && navigated == false) {
+                                        if (gameType.equals("guessThePassword") && navigated == false) {
                                             navigated = true;
-                                            navController.navigate(R.id.action_roomLobbyFragment_to_guessPasswordGameFragment, bundle);
-                                        } else if (gameType.equals("bonusGame") && String.valueOf(getVisibleFragment().getId()).equals("2131231088") && navigated == false) {
+                                            navController.navigate(R.id.action_roomLobbyFragment_to_guessPasswordGamePlayerFragment, bundle);
+                                        } else if (gameType.equals("bonusGame") && navigated == false) {
                                             navigated = true;
                                             navController.navigate(R.id.action_roomLobbyFragment_to_bonusGameFragment, bundle);
                                         }

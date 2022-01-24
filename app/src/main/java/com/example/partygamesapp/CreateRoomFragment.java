@@ -76,6 +76,7 @@ public class CreateRoomFragment extends Fragment {
             hashMap.put("gameState", "Lobby");
 
             hashMap.put("choosenWord", "-");
+            hashMap.put("description", "-");
 
 
             FirebaseDatabase database = FirebaseDatabase.getInstance("https://partygamesapp-39747-default-rtdb.europe-west1.firebasedatabase.app/");

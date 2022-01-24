@@ -108,5 +108,13 @@
         <action
             android:id="@+id/action_roomLobbyFragment_to_bonusGameFragment"
             app:destination="@id/bonusGameFragment" />
+        <action
+            android:id="@+id/action_roomLobbyFragment_to_guessPasswordGamePlayerFragment"
+            app:destination="@id/guessPasswordGamePlayerFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/guessPasswordGamePlayerFragment"
+        android:name="com.example.partygamesapp.GuessPasswordGamePlayerFragment"
+        android:label="fragment_guess_password_game_player"
+        tools:layout="@layout/fragment_guess_password_game_player" />
 </navigation>
