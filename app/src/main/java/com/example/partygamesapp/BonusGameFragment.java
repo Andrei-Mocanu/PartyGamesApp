@@ -158,9 +158,6 @@ public class BonusGameFragment extends Fragment {
                         myRef.child(uid).child("scorPlayer").setValue(String.valueOf(score));
                         myRef.child(uid).child("timestampPlayer").setValue(String.valueOf(System.currentTimeMillis()));
                     }
-                    else if(userType.equals("spectator")){
-                        myRef.child(uid).child("scorSpectator").setValue(String.valueOf(score));
-                    }
 
                     myRef.child(uid).addValueEventListener(new ValueEventListener() {
                         @Override
@@ -219,6 +216,10 @@ public class BonusGameFragment extends Fragment {
                                                         result.setText("A castigat " + adminName);
                                                     }
 
+                                                }
+
+                                                if(userType.equals("spectator")) {
+                                                    result.append(" Scorul tau: " + String.valueOf(score));
                                                 }
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
